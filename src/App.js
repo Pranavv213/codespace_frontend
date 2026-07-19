@@ -3,7 +3,7 @@ import {
   FiUploadCloud, FiMessageSquare, FiDatabase, FiTrash2, 
   FiCpu, FiSend, FiHardDrive, FiCheckCircle, FiAlertCircle 
 } from 'react-icons/fi';
-import './App.css'; // Add the CSS provided below for the custom styling
+import './App.css';
 
 const API_BASE = 'http://localhost:8000';
 
@@ -13,6 +13,9 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState('');
   const [newIndexName, setNewIndexName] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  
+  // UI Panels State
+  const [showSteps, setShowSteps] = useState(false);
   
   // Loading & Processing States
   const [isUploading, setIsUploading] = useState(false);
@@ -44,7 +47,7 @@ function App() {
         setSelectedIndex(data.indices[0]);
       }
     } catch (err) {
-      showStatus('Failed to connect to backend api', 'error');
+      showStatus('Failed to connect to backend API', 'error');
     }
   };
 
@@ -180,12 +183,32 @@ function App() {
             <button type="submit" className="action-btn glow" disabled={isUploading}>
               {isUploading ? "Processing Subsystems..." : "Deploy Vectors"}
             </button>
+
+            {/* Interactive Step-by-Step System Guide */}
+            <div className="steps-container">
+              <button 
+                type="button" 
+                className="steps-toggle-btn"
+                onClick={() => setShowSteps(!showSteps)}
+              >
+                {showSteps ? "Hide pipeline instructions" : "Click here to know the steps"}
+              </button>
+              
+              {showSteps && (
+                <ol className="steps-list">
+                  <li>Click on the file selector to upload your codebase context.</li>
+                  <li>Name the index where you want to route and isolate these tokens.</li>
+                  <li>Click the <strong>Deploy Vectors</strong> button to split layers, run the dense/sparse hybrid transforms, and write to Pinecone database indexes.</li>
+                  <li>Wait a brief moment for asynchronous server-side batches to finish indexing.</li>
+                  <li>Focus the deployed target context and execute queries inside the conversational matrix workspace.</li>
+                </ol>
+              )}
+            </div>
           </form>
         </section>
 
         {/* Active Knowledge Bases */}
         
-
         {/* Dynamic Pipeline Global Status Banner */}
         {statusMessage.text && (
           <div className={`status-banner ${statusMessage.type}`}>
