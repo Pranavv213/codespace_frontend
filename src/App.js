@@ -155,7 +155,7 @@ function App() {
       <aside className="sidebar">
         <div className="brand">
           <FiCpu className="brand-icon pulse" />
-          <h2>CoreRAG <span>v3.1</span></h2>
+          <h2>Codespace <span></span></h2>
         </div>
 
         {/* Data Sync Section */}
@@ -225,7 +225,7 @@ function App() {
         <header className="chat-header">
           <div className="header-meta">
             <FiMessageSquare />
-            <h2>Interactive Retrieval Assistant</h2>
+            <h2>Code Helper Assistant</h2>
           </div>
           {selectedIndex && (
             <div className="active-pill">
